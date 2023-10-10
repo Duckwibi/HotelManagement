@@ -1,0 +1,19 @@
+﻿@model IList<Menu>
+
+<div class="Menu">
+    <div><span>Menu</span><i class="fa-light fa-arrow-left"></i></div>
+    <ul>
+        @foreach(var item in Model.Where(i => i.Levels == 1).OrderBy(i => i.MenuOrder))
+        {
+            <li>
+                <div><i class="@item.IconClassName"></i><a asp-controller="@item.ControllerName" asp-action="@item.ActionName">@item.MenuName</a></div>
+                <ul>
+                    @foreach (var item1 in Model.Where(i => i.ParentId == item.MenuID && i.Levels == 2).OrderBy(i => i.MenuOrder))
+                    {
+                        <li><i class="@item1.IconClassName"></i><a asp-controller="@item1.ControllerName" asp-action="@item1.ActionName">@item1.MenuName</a></li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
